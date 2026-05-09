@@ -1,0 +1,100 @@
+.transactions-page { animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.transactions-card {
+  background: rgba(6, 78, 59, 0.3);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(110, 231, 183, 0.1);
+  border-radius: 28px;
+  padding: 2.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+}
+
+.transactions-table-wrapper { overflow-x: auto; margin-top: 1.5rem; }
+
+.transactions-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.transactions-table th {
+  text-align: left;
+  padding: 1rem 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #6ee7b7;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.transactions-table td {
+  padding: 1.25rem 1.5rem;
+  font-size: 0.95rem;
+  color: #ecfdf5;
+  background: rgba(2, 44, 34, 0.3);
+  border-top: 1px solid rgba(110, 231, 183, 0.05);
+  border-bottom: 1px solid rgba(110, 231, 183, 0.05);
+}
+
+.transactions-table td:first-child {
+  border-left: 1px solid rgba(110, 231, 183, 0.05);
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+
+.transactions-table td:last-child {
+  border-right: 1px solid rgba(110, 231, 183, 0.05);
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.transactions-table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.transactions-table tbody tr:hover td {
+  background: rgba(2, 44, 34, 0.5);
+  transform: scale(1.01);
+  border-color: rgba(110, 231, 183, 0.2);
+}
+
+.type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.type-badge.sent { background: rgba(251, 113, 133, 0.15); color: #fb7185; }
+.type-badge.received { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+
+.status-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.counterparty-cell { display: flex; flex-direction: column; gap: 4px; }
+
+.account-label {
+  font-weight: 800;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.email-label { font-size: 0.75rem; color: #64748b; font-weight: 600; }
+
+@media (max-width: 992px) {
+  .transactions-table th:nth-child(4),
+  .transactions-table td:nth-child(4) { display: none; }
+}

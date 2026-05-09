@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('NexusBank - Dashboard')}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Welcome Section -->
+            <div class="welcome-section" id="welcomeSection">
+                <h1 class="welcome-title">Good <span id="timeGreeting">Day</span>, <span id="userName">User</span></h1>
+                <p class="welcome-subtitle">Here's your financial overview</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <!-- Balance Card -->
+                <div class="stat-card balance-card" id="balanceCard">
+                    <div class="stat-card-header">
+                        <span class="stat-icon">💰</span>
+                        <span class="stat-label">Available Balance</span>
+                    </div>
+                    <div class="stat-value" id="balanceValue">
+                        <span class="currency">₹</span>
+                        <span id="accountBalance">0.00</span>
+                    </div>
+                    <div class="stat-footer">
+                        <span class="status-badge active">● Active</span>
+                    </div>
+                </div>
+
+                <!-- Account Card -->
+                <div class="stat-card account-card" id="accountCard">
+                    <div class="stat-card-header">
+                        <span class="stat-icon">🏦</span>
+                        <span class="stat-label">Account Number</span>
+                    </div>
+                    <div class="stat-value account-number" id="accountNumber">
+                        ACC--------
+                    </div>
+                    <div class="stat-footer">
+                        <span class="account-type">Savings Account</span>
+                    </div>
+                </div>
+
+                <!-- Quick Transfer Card -->
+                <div class="stat-card action-card" id="quickActionCard">
+                    <div class="stat-card-header">
+                        <span class="stat-icon">⚡</span>
+                        <span class="stat-label">Quick Actions</span>
+                    </div>
+                    <div class="quick-actions">
+                        <a href="/transfer" class="quick-action-btn">
+                            <span class="qa-icon">⇄</span>
+                            <span>Transfer</span>
+                        </a>
+                        <a href="/transactions" class="quick-action-btn">
+                            <span class="qa-icon">📋</span>
+                            <span>History</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="section-card" id="recentTransactionsSection">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Transactions</h2>
+                    <a href="/transactions" class="view-all-link">View All →</a>
+                </div>
+                <div class="transactions-list" id="recentTransactions">
+                    <div class="empty-state" id="noTransactions">
+                        <span class="empty-icon">📭</span>
+                        <p>No transactions yet</p>
+                        <a href="/transfer" class="btn btn-outline">Make your first transfer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+    <script th:src="@{/js/app.js}"></script>
+    <script>
+        requireAuth();
+        loadDashboard();
+    </script>
+</body>
+</html>

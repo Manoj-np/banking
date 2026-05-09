@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('NexusBank - Register')}"></head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card" id="registerCard">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <span class="logo-icon-large">◈</span>
+                </div>
+                <h1>Create Account</h1>
+                <p class="auth-subtitle">Join NexusBank for secure digital banking</p>
+            </div>
+
+            <div class="alert alert-error" id="registerError" style="display: none;">
+                <span class="alert-icon">⚠</span>
+                <span id="registerErrorMsg"></span>
+            </div>
+
+            <div class="alert alert-success" id="registerSuccess" style="display: none;">
+                <span class="alert-icon">✓</span>
+                <span id="registerSuccessMsg"></span>
+            </div>
+
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="name" class="form-label">Full Name</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">👤</span>
+                        <input type="text" id="name" name="name" class="form-input" 
+                               placeholder="John Doe" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">✉</span>
+                        <input type="email" id="email" name="email" class="form-input" 
+                               placeholder="you@example.com" required autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="password" name="password" class="form-input" 
+                               placeholder="Minimum 6 characters" required minlength="6" autocomplete="new-password">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" 
+                               placeholder="Re-enter your password" required minlength="6" autocomplete="new-password">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full" id="registerBtn">
+                    <span class="btn-text">Create Account</span>
+                    <span class="btn-loader" style="display: none;">⟳</span>
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="/login" class="auth-link">Sign in</a></p>
+            </div>
+        </div>
+
+        <div class="auth-decoration">
+            <div class="decoration-circle circle-1"></div>
+            <div class="decoration-circle circle-2"></div>
+            <div class="decoration-circle circle-3"></div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>
