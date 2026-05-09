@@ -23,5 +23,7 @@ COPY --from=backend-build /app/target/*.jar app.jar
 # Expose the port Spring Boot runs on
 EXPOSE 8080
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Run the application with Memory Optimization for Cloud Free Tiers
+# -Xmx300m: Limits the max memory to 300MB
+# -XX:+UseSerialGC: Uses a lower-memory garbage collector
+ENTRYPOINT ["java", "-Xmx300m", "-XX:+UseSerialGC", "-jar", "app.jar"]
