@@ -43,8 +43,11 @@ public class DataSourceConfig {
                     finalUser = userInfo.split(":")[0];
                     finalPass = userInfo.split(":")[1];
                 }
+                // CLEAN THE URL: Remove user:pass@ from the URL
+                finalUrl = "jdbc:postgresql://" + finalUrl.substring(finalUrl.indexOf("@") + 1);
+            } else {
+                finalUrl = finalUrl.replace("postgres://", "jdbc:postgresql://");
             }
-            finalUrl = finalUrl.replace("postgres://", "jdbc:postgresql://");
             finalDriver = "org.postgresql.Driver";
         } else if (finalUrl.startsWith("jdbc:postgresql://")) {
             finalDriver = "org.postgresql.Driver";
