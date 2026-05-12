@@ -31,9 +31,19 @@ public class DataSourceConfig {
     public DataSource dataSource() {
         String finalUrl = springDbUrl.isEmpty() ? renderDbUrl : springDbUrl;
         String finalDriver = driverClassName;
+        String finalUser = username;
+        String finalPass = password;
 
-        // Auto-fix for Render's PostgreSQL URL
+        // Auto-fix for Render's PostgreSQL URL: postgres://user:pass@host:port/db
         if (finalUrl.startsWith("postgres://")) {
+            // Extract credentials if present: user:pass@host
+            if (finalUrl.contains("@")) {
+                String userInfo = finalUrl.substring(11, finalUrl.indexOf("@"));
+                if (userInfo.contains(":")) {
+                    finalUser = userInfo.split(":")[0];
+                    finalPass = userInfo.split(":")[1];
+                }
+            }
             finalUrl = finalUrl.replace("postgres://", "jdbc:postgresql://");
             finalDriver = "org.postgresql.Driver";
         } else if (finalUrl.startsWith("jdbc:postgresql://")) {
@@ -51,8 +61,8 @@ public class DataSourceConfig {
 
         return DataSourceBuilder.create()
                 .url(finalUrl)
-                .username(username)
-                .password(password)
+                .username(finalUser)
+                .password(finalPass)
                 .driverClassName(finalDriver)
                 .build();
     }
