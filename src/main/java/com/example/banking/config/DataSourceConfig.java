@@ -34,33 +34,31 @@ public class DataSourceConfig {
         String finalUser = username;
         String finalPass = password;
 
-        // Auto-fix for Render's PostgreSQL URL: postgres://user:pass@host:port/db
-        if (finalUrl.startsWith("postgres://")) {
-            // Extract credentials if present: user:pass@host
-            if (finalUrl.contains("@")) {
-                String userInfo = finalUrl.substring(11, finalUrl.indexOf("@"));
-                if (userInfo.contains(":")) {
-                    finalUser = userInfo.split(":")[0];
-                    finalPass = userInfo.split(":")[1];
+        try {
+            if (finalUrl.startsWith("postgres://")) {
+                java.net.URI uri = new java.net.URI(finalUrl);
+                String userInfo = uri.getUserInfo();
+                if (userInfo != null && userInfo.contains(":")) {
+                    finalUser = userInfo.split(":", 2)[0];
+                    finalPass = userInfo.split(":", 2)[1];
                 }
-                // CLEAN THE URL: Remove user:pass@ from the URL
-                finalUrl = "jdbc:postgresql://" + finalUrl.substring(finalUrl.indexOf("@") + 1);
-            } else {
-                finalUrl = finalUrl.replace("postgres://", "jdbc:postgresql://");
+                finalUrl = "jdbc:postgresql://" + uri.getHost() + (uri.getPort() != -1 ? ":" + uri.getPort() : "") + uri.getPath();
+                finalDriver = "org.postgresql.Driver";
+            } else if (finalUrl.startsWith("jdbc:postgresql://")) {
+                finalDriver = "org.postgresql.Driver";
+            } else if (finalUrl.startsWith("jdbc:mysql://")) {
+                finalDriver = "com.mysql.cj.jdbc.Driver";
             }
-            finalDriver = "org.postgresql.Driver";
-        } else if (finalUrl.startsWith("jdbc:postgresql://")) {
-            finalDriver = "org.postgresql.Driver";
-        } else if (finalUrl.startsWith("jdbc:mysql://")) {
-            finalDriver = "com.mysql.cj.jdbc.Driver";
+        } catch (Exception e) {
+            System.err.println("❌ Error parsing Database URL: " + e.getMessage());
         }
 
         // If no URL is provided, fallback to local MySQL
-        if (finalUrl.isEmpty()) {
+        if (finalUrl == null || finalUrl.isEmpty()) {
             finalUrl = "jdbc:mysql://localhost:3306/paperless_bank?createDatabaseIfNotExist=true&useSSL=false";
         }
 
-        System.out.println("🔌 Connecting to database at: " + finalUrl.split("@")[finalUrl.split("@").length - 1]);
+        System.out.println("🔌 Connecting to: " + finalUrl);
 
         return DataSourceBuilder.create()
                 .url(finalUrl)
