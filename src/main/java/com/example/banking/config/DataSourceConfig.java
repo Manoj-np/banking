@@ -36,8 +36,10 @@ public class DataSourceConfig {
         if (finalUrl.startsWith("postgres://")) {
             finalUrl = finalUrl.replace("postgres://", "jdbc:postgresql://");
             finalDriver = "org.postgresql.Driver";
-        } else if (finalUrl.contains("postgresql")) {
+        } else if (finalUrl.startsWith("jdbc:postgresql://")) {
             finalDriver = "org.postgresql.Driver";
+        } else if (finalUrl.startsWith("jdbc:mysql://")) {
+            finalDriver = "com.mysql.cj.jdbc.Driver";
         }
 
         // If no URL is provided, fallback to local MySQL
