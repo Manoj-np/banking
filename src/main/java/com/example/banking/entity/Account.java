@@ -21,6 +21,9 @@ public class Account {
     @Column(nullable = false)
     private String accountStatus;
 
+    @Column(nullable = false)
+    private Double overdraftLimit = 500.0;
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     @JsonIgnoreProperties({"password", "hibernateLazyInitializer", "handler"})
@@ -73,6 +76,14 @@ public class Account {
 
     public void setAccountStatus(String accountStatus) {
         this.accountStatus = accountStatus;
+    }
+
+    public Double getOverdraftLimit() {
+        return overdraftLimit;
+    }
+
+    public void setOverdraftLimit(Double overdraftLimit) {
+        this.overdraftLimit = overdraftLimit;
     }
 
     public User getUser() {

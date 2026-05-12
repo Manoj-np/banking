@@ -44,6 +44,7 @@ public class SecurityConfig {
                                 "/api/auth/register", "/api/auth/login", "/api/auth/test",
                                 "/login", "/register", "/dashboard", "/transfer", "/transactions", "/admin",
                                 "/css/**", "/js/**", "/images/**", "/assets/**",
+                                "/*.ico", "/*.png", "/*.svg", "/*.json", "/*.txt",
                                 "/h2-console/**", "/index.html"
                         ).permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")

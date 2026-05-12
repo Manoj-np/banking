@@ -1,4 +1,4 @@
-# Stage 1: Build the React Frontend
+# --- Stage 1: Build Frontend ---
 FROM node:20-alpine as frontend-build
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
@@ -6,24 +6,22 @@ RUN npm install
 COPY frontend/ ./
 RUN npm run build
 
-# Stage 2: Build the Spring Boot Backend
-FROM maven:3.9.6-eclipse-temurin-17-alpine as backend-build
+# --- Stage 2: Build Backend ---
+FROM maven:3.9-eclipse-temurin-17-alpine as backend-build
 WORKDIR /app
-COPY pom.xml .
+COPY pom.xml ./
+# Pre-download dependencies to speed up builds
+RUN mvn dependency:go-offline
 COPY src ./src
-# Copy the built frontend into Spring Boot's static resources
-COPY --from=frontend-build /app/frontend/dist ./src/main/resources/static
-RUN mvn clean package -DskipTests
+# Copy the frontend build from Stage 1 into backend's static resources
+COPY --from=frontend-build /app/src/main/resources/static ./src/main/resources/static
+# Build the JAR (skipping tests for faster deployment)
+RUN mvn package -DskipTests
 
-# Stage 3: Final Runtime Image
+# --- Stage 3: Runtime ---
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=backend-build /app/target/*.jar app.jar
-
-# Expose the port Spring Boot runs on
+# Render uses the PORT environment variable
 EXPOSE 8080
-
-# Run the application with Memory Optimization for Cloud Free Tiers
-# -Xmx300m: Limits the max memory to 300MB
-# -XX:+UseSerialGC: Uses a lower-memory garbage collector
-ENTRYPOINT ["java", "-Xmx300m", "-XX:+UseSerialGC", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx512m", "-jar", "app.jar"]

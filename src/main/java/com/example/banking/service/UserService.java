@@ -145,10 +145,10 @@ public class UserService {
             throw new InvalidCredentialsException("Invalid Transaction PIN.");
         }
 
-        if (senderAccount.getBalance() < request.getAmount()) {
-            logger.warn("Transfer failed: Insufficient balance for account - {}", senderAccount.getAccountNumber());
+        if (senderAccount.getBalance() + senderAccount.getOverdraftLimit() < request.getAmount()) {
+            logger.warn("Transfer failed: Insufficient balance (including overdraft) for account - {}", senderAccount.getAccountNumber());
             throw new InsufficientBalanceException(
-                "Insufficient balance. Current balance: " + senderAccount.getBalance()
+                "Insufficient balance. Available limit (including overdraft): " + (senderAccount.getBalance() + senderAccount.getOverdraftLimit())
             );
         }
 
@@ -285,8 +285,8 @@ public class UserService {
             throw new AccessDeniedException("Administrators are not permitted to perform financial operations on their own accounts.");
         }
 
-        if (account.getBalance() < request.getAmount()) {
-            throw new InsufficientBalanceException("Insufficient funds for withdrawal.");
+        if (account.getBalance() + account.getOverdraftLimit() < request.getAmount()) {
+            throw new InsufficientBalanceException("Insufficient funds for withdrawal (including overdraft limit).");
         }
 
         account.setBalance(account.getBalance() - request.getAmount());

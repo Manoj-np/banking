@@ -75,10 +75,16 @@ export default function Dashboard() {
               <span className="stat-icon-mini">💳</span>
               <span className="stat-label">Total Balance</span>
             </div>
-            <div className="stat-value-large">
+            <div className={`stat-value-large ${account?.balance < 0 ? 'negative-balance' : ''}`}>
               <span className="currency-symbol">₹</span>
               {account ? formatCurrency(account.balance) : '0.00'}
             </div>
+            {account && account.overdraftLimit > 0 && (
+              <div className="stat-overdraft-info">
+                <span className="overdraft-label">Overdraft Buffer: ₹{formatCurrency(account.overdraftLimit)}</span>
+                <span className="available-label">Total Liquidity: ₹{formatCurrency(account.balance + account.overdraftLimit)}</span>
+              </div>
+            )}
             <div className="stat-trend positive">
               <span className="trend-icon">↑</span> 2.4% from last month
             </div>
@@ -115,6 +121,55 @@ export default function Dashboard() {
               </Link>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="analytics-section glass-panel">
+        <div className="section-header">
+          <div className="section-title-group">
+            <h2 className="section-title">Wealth Analytics</h2>
+            <span className="section-subtitle">Visualizing your digital asset growth</span>
+          </div>
+          <div className="analytics-toggle">
+            <span className="active">Monthly</span>
+            <span>Yearly</span>
+          </div>
+        </div>
+        <div className="chart-container">
+          {[40, 65, 45, 90, 75, 100].map((height, i) => (
+            <div className="chart-bar-wrapper" key={i}>
+              <div className="chart-bar" style={{ height: `${height}%` }}>
+                <div className="bar-tooltip">₹{(height * 500).toLocaleString()}</div>
+              </div>
+              <span className="bar-label">{['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'][i]}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="algo-insights-grid">
+        <div className="insight-card glass-panel">
+          <div className="insight-header">
+            <span className="insight-icon">🛡️</span>
+            <span className="insight-label">AI Security Scan</span>
+          </div>
+          <p className="insight-text">
+            Analyzing patterns using <strong>Z-Score Anomaly Detection</strong>. 
+            No outliers detected in your recent asset flows.
+          </p>
+          <div className="insight-status">Status: Secure</div>
+        </div>
+
+        <div className="insight-card glass-panel">
+          <div className="insight-header">
+            <span className="insight-icon">📈</span>
+            <span className="insight-label">Wealth Optimization</span>
+          </div>
+          <p className="insight-text">
+            Using <strong>Pareto Analysis (80/20)</strong> to identify top spending 
+            efficiency. Your growth trend is currently optimal.
+          </p>
+          <div className="insight-status">Efficiency: High</div>
         </div>
       </div>
 

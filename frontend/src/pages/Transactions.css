@@ -1,13 +1,11 @@
 .transactions-page { animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
 
 .transactions-card {
-  background: rgba(6, 78, 59, 0.3);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(110, 231, 183, 0.1);
+  background: white;
+  border: 1px solid #e2e8f0;
   border-radius: 28px;
   padding: 2.5rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
 }
 
 .transactions-table-wrapper { overflow-x: auto; margin-top: 1.5rem; }
@@ -23,7 +21,7 @@
   padding: 1rem 1.5rem;
   font-size: 0.8rem;
   font-weight: 700;
-  color: #6ee7b7;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -31,20 +29,20 @@
 .transactions-table td {
   padding: 1.25rem 1.5rem;
   font-size: 0.95rem;
-  color: #ecfdf5;
-  background: rgba(2, 44, 34, 0.3);
-  border-top: 1px solid rgba(110, 231, 183, 0.05);
-  border-bottom: 1px solid rgba(110, 231, 183, 0.05);
+  color: #0f172a;
+  background: #f8fafc;
+  border-top: 1px solid #f1f5f9;
+  border-bottom: 1px solid #f1f5f9;
 }
 
 .transactions-table td:first-child {
-  border-left: 1px solid rgba(110, 231, 183, 0.05);
+  border-left: 1px solid #f1f5f9;
   border-top-left-radius: 16px;
   border-bottom-left-radius: 16px;
 }
 
 .transactions-table td:last-child {
-  border-right: 1px solid rgba(110, 231, 183, 0.05);
+  border-right: 1px solid #f1f5f9;
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
 }
@@ -54,9 +52,8 @@
 }
 
 .transactions-table tbody tr:hover td {
-  background: rgba(2, 44, 34, 0.5);
-  transform: scale(1.01);
-  border-color: rgba(110, 231, 183, 0.2);
+  background: #f0fdf4;
+  border-color: #10b981;
 }
 
 .type-badge {
@@ -69,8 +66,8 @@
   font-weight: 700;
 }
 
-.type-badge.sent { background: rgba(251, 113, 133, 0.15); color: #fb7185; }
-.type-badge.received { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.type-badge.sent { background: #fee2e2; color: #dc2626; }
+.type-badge.received { background: #dcfce7; color: #059669; }
 
 .status-pill {
   display: inline-block;
@@ -78,16 +75,14 @@
   border-radius: 8px;
   font-size: 0.75rem;
   font-weight: 700;
-  background: rgba(16, 185, 129, 0.1);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: #f0fdf4;
+  color: #10b981;
+  border: 1px solid #dcfce7;
 }
-
-.counterparty-cell { display: flex; flex-direction: column; gap: 4px; }
 
 .account-label {
   font-weight: 800;
-  color: #fff;
+  color: #0f172a;
   font-family: var(--font-mono);
   font-size: 0.9rem;
 }

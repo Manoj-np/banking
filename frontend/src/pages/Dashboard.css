@@ -13,20 +13,20 @@
 .welcome-title {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #fff;
+  color: #0f172a;
   letter-spacing: -0.03em;
   margin-bottom: 0.5rem;
 }
 
 .welcome-subtitle {
   font-size: 1.1rem;
-  color: #34d399;
+  color: #64748b;
   font-weight: 500;
 }
 
 .account-tag {
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: #f0fdf4;
+  border: 1px solid #dcfce7;
   padding: 8px 16px;
   border-radius: 100px;
   color: #10b981;
@@ -46,9 +46,6 @@
 
 .stat-card-inner {
   padding: 2rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 .stat-label-group {
@@ -58,12 +55,10 @@
   margin-bottom: 1.5rem;
 }
 
-.stat-icon-mini { font-size: 1.2rem; }
-
 .stat-label {
   font-size: 0.85rem;
   font-weight: 700;
-  color: #6ee7b7;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -71,7 +66,7 @@
 .stat-value-large {
   font-size: 3rem;
   font-weight: 800;
-  color: #fff;
+  color: #0f172a;
   margin-bottom: 1rem;
   font-family: var(--font-mono);
 }
@@ -79,37 +74,198 @@
 .currency-symbol {
   font-size: 1.5rem;
   margin-right: 4px;
-  color: #34d399;
+  color: #10b981;
 }
 
-.stat-trend {
-  font-size: 0.9rem;
+.negative-balance {
+  color: #ef4444 !important;
+}
+
+.stat-overdraft-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.overdraft-label {
+  font-size: 0.75rem;
   font-weight: 600;
+  color: #64748b;
 }
 
-.stat-trend.positive { color: #10b981; }
+.available-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0f172a;
+  background: #f8fafc;
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  align-self: flex-start;
+}
 
 .stat-value-mono {
   font-family: var(--font-mono);
   font-size: 1.75rem;
   font-weight: 700;
-  color: #fff;
-  background: rgba(2, 44, 34, 0.4);
+  color: #0f172a;
+  background: #f8fafc;
   padding: 12px;
   border-radius: 12px;
   margin-bottom: 1.5rem;
   letter-spacing: 0.05em;
-  border: 1px solid rgba(110, 231, 183, 0.1);
+  border: 1px solid #e2e8f0;
 }
 
 .stat-badge-eco {
   align-self: flex-start;
-  background: rgba(110, 231, 183, 0.1);
-  color: #6ee7b7;
+  background: #f0fdf4;
+  color: #10b981;
   padding: 4px 12px;
   border-radius: 8px;
   font-size: 0.75rem;
   font-weight: 700;
+}
+
+/* Analytics Section */
+.analytics-section {
+  padding: 2.5rem;
+}
+
+.analytics-toggle {
+  display: flex;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 10px;
+  gap: 4px;
+}
+
+.analytics-toggle span {
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.analytics-toggle span.active {
+  background: white;
+  color: #10b981;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.chart-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 200px;
+  margin-top: 2.5rem;
+  padding: 0 1rem;
+  gap: 12px;
+}
+
+.chart-bar-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.chart-bar {
+  width: 100%;
+  max-width: 40px;
+  background: linear-gradient(to top, #10b981, #6ee7b7);
+  border-radius: 8px 8px 4px 4px;
+  position: relative;
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+}
+
+.chart-bar:hover {
+  filter: brightness(1.1);
+  transform: scaleX(1.1);
+}
+
+.bar-tooltip {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.chart-bar:hover .bar-tooltip {
+  opacity: 1;
+  top: -45px;
+}
+
+.bar-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+/* Algo Insights Grid */
+.algo-insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.insight-card {
+  padding: 1.5rem;
+  border-left: 4px solid #10b981;
+}
+
+.insight-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.insight-icon { font-size: 1.5rem; }
+
+.insight-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.insight-text {
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.insight-status {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #f0fdf4;
+  color: #10b981;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 /* Action Buttons */
@@ -133,24 +289,18 @@
 
 .action-btn-primary {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: #022c22;
-}
-
-.action-btn-primary:hover {
-  transform: translateX(4px);
-  filter: brightness(1.1);
+  color: white;
 }
 
 .action-btn-secondary {
-  background: rgba(110, 231, 183, 0.05);
-  border: 1px solid rgba(110, 231, 183, 0.1);
-  color: #6ee7b7;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
 }
 
 .action-btn-secondary:hover {
-  background: rgba(110, 231, 183, 0.1);
-  color: #fff;
-  transform: translateX(4px);
+  background: #e2e8f0;
+  color: #0f172a;
 }
 
 /* Ledger Section */
@@ -158,23 +308,15 @@
   padding: 2.5rem;
 }
 
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2.5rem;
-}
-
 .section-title {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #fff;
-  margin-bottom: 4px;
+  color: #0f172a;
 }
 
 .section-subtitle {
   font-size: 0.9rem;
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .view-more-btn {
@@ -182,15 +324,6 @@
   text-decoration: none;
   font-weight: 700;
   font-size: 0.9rem;
-  transition: all 0.3s ease;
-}
-
-.view-more-btn:hover { color: #34d399; transform: translateX(4px); }
-
-.ledger-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
 }
 
 .ledger-item {
@@ -198,22 +331,15 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.25rem;
-  background: rgba(2, 44, 34, 0.3);
-  border: 1px solid rgba(110, 231, 183, 0.05);
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
   border-radius: 18px;
   transition: all 0.3s ease;
 }
 
 .ledger-item:hover {
-  background: rgba(2, 44, 34, 0.5);
-  border-color: rgba(110, 231, 183, 0.2);
-  transform: scale(1.01);
-}
-
-.ledger-left {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
+  border-color: #10b981;
+  background: #f0fdf4;
 }
 
 .ledger-icon-box {
@@ -226,36 +352,21 @@
   font-size: 1.2rem;
 }
 
-.ledger-icon-box.sent { background: rgba(251, 113, 133, 0.1); }
-.ledger-icon-box.received { background: rgba(16, 185, 129, 0.1); }
+.ledger-icon-box.sent { background: #fee2e2; }
+.ledger-icon-box.received { background: #dcfce7; }
 
-.ledger-details { display: flex; flex-direction: column; gap: 2px; }
-
-.ledger-party { font-weight: 700; color: #fff; font-size: 1rem; }
+.ledger-party { font-weight: 700; color: #0f172a; font-size: 1rem; }
 .ledger-desc { font-size: 0.8rem; color: #64748b; font-weight: 500; }
 
-.ledger-right { text-align: right; }
+.ledger-amount { font-size: 1.1rem; font-weight: 800; }
+.ledger-amount.positive { color: #059669; }
+.ledger-amount.negative { color: #dc2626; }
 
-.ledger-amount { font-size: 1.1rem; font-weight: 800; margin-bottom: 4px; }
-.ledger-amount.positive { color: #10b981; }
-.ledger-amount.negative { color: #fb7185; }
-
-.ledger-date { font-size: 0.75rem; color: #64748b; font-weight: 600; }
-
-.empty-ledger {
-  text-align: center;
-  padding: 4rem 0;
-}
-
-.empty-icon-box {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  opacity: 0.5;
-}
+.ledger-date { font-size: 0.75rem; color: #94a3b8; font-weight: 600; }
 
 @media (max-width: 768px) {
-  .dashboard-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
   .welcome-title { font-size: 1.75rem; }
   .stat-value-large { font-size: 2.25rem; }
-  .ledger-section { padding: 1.5rem; }
+  .chart-container { gap: 4px; }
+  .bar-label { font-size: 0.6rem; }
 }

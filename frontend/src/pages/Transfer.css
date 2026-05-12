@@ -5,13 +5,13 @@
 .page-title {
   font-size: 2.25rem;
   font-weight: 800;
-  color: #fff;
+  color: #0f172a;
   letter-spacing: -0.02em;
   margin-bottom: 0.5rem;
 }
 
 .page-subtitle {
-  color: #34d399;
+  color: #64748b;
   font-size: 1rem;
   font-weight: 500;
 }
@@ -24,18 +24,16 @@
 }
 
 .transfer-card {
-  background: rgba(6, 78, 59, 0.3);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(110, 231, 183, 0.1);
+  background: white;
+  border: 1px solid #e2e8f0;
   border-radius: 24px;
   padding: 2.5rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
 }
 
 .info-card {
-  background: rgba(6, 78, 59, 0.2);
-  border: 1px solid rgba(110, 231, 183, 0.1);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 24px;
   padding: 2rem;
 }
@@ -43,7 +41,7 @@
 .info-card h3 {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #fff;
+  color: #0f172a;
   margin-bottom: 1.25rem;
 }
 
@@ -59,7 +57,7 @@
   align-items: flex-start;
   gap: 12px;
   font-size: 0.85rem;
-  color: #a7f3d0;
+  color: #475569;
   line-height: 1.6;
 }
 
@@ -72,7 +70,7 @@
 .form-hint {
   display: block;
   font-size: 0.75rem;
-  color: #34d399;
+  color: #64748b;
   margin-top: 0.6rem;
   font-style: italic;
 }

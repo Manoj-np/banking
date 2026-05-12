@@ -134,7 +134,8 @@ export default function Transfer() {
                 />
               </div>
               <span className="form-hint">
-                Available balance: ₹{account ? formatCurrency(account.balance) : '—'}
+                Available: ₹{account ? formatCurrency(account.balance) : '—'} 
+                {account && account.overdraftLimit > 0 && ` (Limit: ₹${formatCurrency(account.balance + account.overdraftLimit)})`}
               </span>
             </div>
 

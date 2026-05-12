@@ -1,23 +1,18 @@
 :root {
-  /* Paperless Bank - Aurora Nature Theme */
+  /* Pristine Digital Paper Palette */
   --primary: #10b981;
-  --primary-glow: rgba(16, 185, 129, 0.4);
-  --secondary: #34d399;
-  --accent: #6ee7b7;
-  --background: #022c22;
-  --surface: rgba(6, 78, 59, 0.6);
-  --surface-hover: rgba(6, 78, 59, 0.8);
-  --text-primary: #ecfdf5;
-  --text-secondary: #a7f3d0;
-  --text-muted: #34d399;
-  --border: rgba(52, 211, 153, 0.15);
-  --glass-bg: rgba(6, 78, 59, 0.4);
-  --glass-border: rgba(110, 231, 183, 0.1);
-  --error: #fb7185;
-  --success: #34d399;
-  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --primary-dark: #059669;
+  --primary-light: #6ee7b7;
+  --bg-color: #ffffff;
+  --bg-soft: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-on-primary: #ffffff;
+  --border-color: rgba(16, 185, 129, 0.15);
+  --accent-glow: rgba(16, 185, 129, 0.1);
+  --font-main: 'Inter', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 * {
@@ -28,71 +23,85 @@
 
 body {
   font-family: var(--font-main);
-  background: var(--background);
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(5, 150, 105, 0.15) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(2, 44, 34, 1) 0px, transparent 100%);
-  color: var(--text-primary);
+  background: radial-gradient(circle at top right, #f0fdf4 0%, #ffffff 100%);
+  color: var(--text-main);
   min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* Base Components Overhaul */
-.glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  box-shadow: var(--shadow-lg);
-}
-
+/* Typography Utilities */
 .gradient-text {
-  background: linear-gradient(135deg, #6ee7b7 0%, #10b981 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-weight: 800;
 }
 
+/* Glassmorphism Panels (Light Mode) */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.05), 
+              0 8px 10px -6px rgba(0, 0, 0, 0.02);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 35px -10px rgba(16, 185, 129, 0.1);
+}
+
+/* Buttons */
 .btn {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  font-size: 0.95rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.875rem 1.75rem;
-  border-radius: 14px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  border: none;
-  gap: 0.75rem;
-  font-family: var(--font-main);
+  gap: 8px;
 }
 
 .btn-primary {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: #022c22;
-  box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+  color: white;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
   filter: brightness(1.1);
+  transform: translateY(-1px);
 }
 
-.btn-full { width: 100%; }
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+}
 
-.form-group { margin-bottom: 1.5rem; }
+.btn-outline:hover {
+  background: var(--accent-glow);
+}
+
+/* Forms (Light Mode) */
+.form-group {
+  margin-bottom: 1.5rem;
+}
 
 .form-label {
   display: block;
   font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-bottom: 0.6rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -103,30 +112,29 @@ body {
   align-items: center;
 }
 
+.input-icon {
+  position: absolute;
+  left: 16px;
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
 .form-input {
   width: 100%;
-  background: rgba(2, 44, 34, 0.4);
-  border: 1px solid var(--glass-border);
+  padding: 14px 16px 14px 48px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
   border-radius: 14px;
-  padding: 1rem 1rem 1rem 3rem;
-  color: var(--text-primary);
+  color: var(--text-main);
   font-size: 1rem;
   transition: all 0.3s ease;
-  outline: none;
 }
 
 .form-input:focus {
+  outline: none;
   border-color: var(--primary);
-  background: rgba(2, 44, 34, 0.6);
-  box-shadow: 0 0 0 4px var(--primary-glow);
-}
-
-.input-icon {
-  position: absolute;
-  left: 1.2rem;
-  color: var(--primary);
-  font-size: 1.2rem;
-  pointer-events: none;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px var(--accent-glow);
 }
 
 /* Animations */
@@ -136,5 +144,23 @@ body {
 }
 
 .animate-fade {
-  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
