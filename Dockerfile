@@ -22,6 +22,10 @@ RUN mvn package -DskipTests
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=backend-build /app/target/*.jar app.jar
-# Render uses the PORT environment variable
-EXPOSE 8080
-ENTRYPOINT ["java", "-Xmx512m", "-jar", "app.jar"]
+
+# Render needs the app to bind to 0.0.0.0
+ENV SERVER_ADDRESS=0.0.0.0
+
+# Optimize for 512MB RAM (Render Free Tier)
+# -Xmx300m leaves enough room for the OS and JVM overhead
+ENTRYPOINT ["java", "-Xmx300m", "-Xms256m", "-jar", "app.jar"]
