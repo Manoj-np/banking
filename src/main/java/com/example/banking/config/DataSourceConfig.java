@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
+import java.net.URI;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 @Configuration
 public class DataSourceConfig {
@@ -29,38 +32,52 @@ public class DataSourceConfig {
     @Bean
     @Primary
     public DataSource dataSource() {
-        String finalUrl = springDbUrl.isEmpty() ? renderDbUrl : springDbUrl;
+        String finalUrl = (springDbUrl != null && !springDbUrl.isEmpty()) ? springDbUrl : renderDbUrl;
         String finalDriver = driverClassName;
         String finalUser = username;
         String finalPass = password;
 
         try {
             if (finalUrl != null && (finalUrl.startsWith("postgres://") || finalUrl.startsWith("postgresql://"))) {
-                java.net.URI uri = new java.net.URI(finalUrl);
+                URI uri = new URI(finalUrl);
                 String userInfo = uri.getUserInfo();
                 if (userInfo != null && userInfo.contains(":")) {
-                    finalUser = userInfo.split(":", 2)[0];
-                    finalPass = userInfo.split(":", 2)[1];
+                    String[] parts = userInfo.split(":", 2);
+                    finalUser = URLDecoder.decode(parts[0], StandardCharsets.UTF_8);
+                    finalPass = URLDecoder.decode(parts[1], StandardCharsets.UTF_8);
                 }
-                // Add sslmode=require for Render Postgres
+
+                // Preserve existing query params; use sslmode=prefer so both Render Internal and External Postgres work
                 String query = uri.getQuery();
-                String sslSuffix = (query == null || !query.contains("sslmode")) ? "?sslmode=require" : "";
-                finalUrl = "jdbc:postgresql://" + uri.getHost() + (uri.getPort() != -1 ? ":" + uri.getPort() : "") + uri.getPath() + sslSuffix;
+                String queryString;
+                if (query == null || query.isEmpty()) {
+                    queryString = "?sslmode=prefer";
+                } else if (!query.contains("sslmode=")) {
+                    queryString = "?" + query + "&sslmode=prefer";
+                } else {
+                    queryString = "?" + query;
+                }
+
+                finalUrl = "jdbc:postgresql://" + uri.getHost()
+                        + (uri.getPort() != -1 ? ":" + uri.getPort() : "")
+                        + uri.getPath()
+                        + queryString;
                 finalDriver = "org.postgresql.Driver";
-                
-                // Set dialect for Hibernate
-                System.setProperty("spring.jpa.properties.hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
             } else if (finalUrl != null && finalUrl.startsWith("jdbc:postgresql://")) {
                 finalDriver = "org.postgresql.Driver";
-                System.setProperty("spring.jpa.properties.hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+            } else if (finalUrl != null && finalUrl.startsWith("jdbc:h2:")) {
+                finalDriver = "org.h2.Driver";
+            } else if (finalUrl != null && finalUrl.startsWith("jdbc:mysql://")) {
+                finalDriver = "com.mysql.cj.jdbc.Driver";
             }
         } catch (Exception e) {
             System.err.println("❌ Error parsing Database URL: " + e.getMessage());
         }
 
-        // If no URL is provided, fallback to local MySQL
+        // Fallback to local MySQL if no URL is provided
         if (finalUrl == null || finalUrl.isEmpty()) {
             finalUrl = "jdbc:mysql://localhost:3306/paperless_bank?createDatabaseIfNotExist=true&useSSL=false";
+            finalDriver = "com.mysql.cj.jdbc.Driver";
         }
 
         System.out.println("🔌 Connecting to: " + finalUrl);

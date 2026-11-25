@@ -1,0 +1,19 @@
+databases:
+  - name: paperless-bank-db
+    databaseName: paperless_bank
+    user: paperless_bank_user
+    plan: free
+
+services:
+  - type: web
+    name: paperless-bank
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: paperless-bank-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true

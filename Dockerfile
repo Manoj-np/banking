@@ -1,13 +1,13 @@
 # --- Stage 1: Build Frontend ---
-FROM node:20-alpine as frontend-build
+FROM node:20-alpine AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
-RUN npm install
+RUN npm ci || npm install
 COPY frontend/ ./
 RUN npm run build
 
 # --- Stage 2: Build Backend ---
-FROM maven:3.9-eclipse-temurin-17-alpine as backend-build
+FROM maven:3.9-eclipse-temurin-17-alpine AS backend-build
 WORKDIR /app
 COPY pom.xml ./
 # Pre-download dependencies to speed up builds
@@ -27,5 +27,4 @@ COPY --from=backend-build /app/target/*.jar app.jar
 ENV SERVER_ADDRESS=0.0.0.0
 
 # Optimize for 512MB RAM (Render Free Tier)
-# -Xmx300m leaves enough room for the OS and JVM overhead
-ENTRYPOINT ["java", "-Xmx300m", "-Xms256m", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx256m", "-Xms128m", "-jar", "app.jar"]
