@@ -1,6 +1,4 @@
 package com.example.banking.dto;
-
-
 public class LoginRequest {
 
     private String email;
