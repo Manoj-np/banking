@@ -4,14 +4,42 @@ import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
 import './Auth.css';
 
+const DEMO_ACCOUNTS = [
+  {
+    key: 'client',
+    label: 'Fill Client',
+    meta: 'Alex Green',
+    email: 'alex@paperless.com',
+    password: 'user123',
+    details: 'Transfer PIN: 1234 · Test recipient: PLB-SARA-01',
+  },
+  {
+    key: 'admin',
+    label: 'Fill Admin',
+    meta: 'System Admin',
+    email: 'admin@nexus.com',
+    password: 'admin123',
+    details: 'Admin Panel access · PIN: 0000',
+  },
+];
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [selectedDemo, setSelectedDemo] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  const handleFillDemo = (demo) => {
+    setEmail(demo.email);
+    setPassword(demo.password);
+    setSelectedDemo(demo);
+    setError('');
+    setSuccess('');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -97,6 +125,31 @@ export default function Login() {
               {loading ? <span className="btn-loader">⟳</span> : 'Sign In'}
             </button>
           </form>
+
+          <div className="demo-card" aria-label="Demo Credentials">
+            <div className="demo-card-header">
+              <span className="demo-card-title">Demo Credentials</span>
+              <span className="demo-card-badge">1-Click Fill</span>
+            </div>
+            <div className="demo-actions">
+              {DEMO_ACCOUNTS.map((demo) => (
+                <button
+                  key={demo.key}
+                  type="button"
+                  className={`demo-fill-btn ${selectedDemo?.key === demo.key ? 'active' : ''}`}
+                  onClick={() => handleFillDemo(demo)}
+                >
+                  <span className="demo-fill-label">{demo.label}</span>
+                  <span className="demo-fill-meta">{demo.meta}</span>
+                </button>
+              ))}
+            </div>
+            <p className="demo-card-hint">
+              {selectedDemo
+                ? `${selectedDemo.email} filled · ${selectedDemo.details}`
+                : 'Select a role above to auto-fill credentials and click Sign In.'}
+            </p>
+          </div>
 
           <div className="auth-footer">
             <p>Don't have an account? <Link to="/register" className="auth-link">Create one</Link></p>
